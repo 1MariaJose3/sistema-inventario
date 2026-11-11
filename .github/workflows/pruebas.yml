@@ -1,0 +1,26 @@
+name: Pruebas Automáticas
+
+# ¿Cuándo se va a ejecutar?
+on:
+  push:
+    branches: [ "main", "test/pruebas-producto" ]
+  pull_request:
+    branches: [ "main" ]
+
+# ¿Qué tareas va a realizar?
+jobs:
+  ejecutar-pruebas:
+    runs-on: ubuntu-latest  # Usa una máquina virtual con Linux
+
+    steps:
+    - name: Descargar el código del repositorio
+      uses: actions/checkout@v3
+
+    - name: Configurar la versión de Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Ejecutar las pruebas unitarias
+      run: |
+        python -m unittest discover -s tests
