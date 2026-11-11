@@ -1,1 +1,2 @@
-print("Estado del producto: Registrado en el sistema de inventario")
+print("Estado del producto: Disponible para entrega inmediata")
+
