@@ -1,0 +1,32 @@
+name: Despliegue del Sistema de Inventario
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Versión a desplegar (ej. v1.0.3)'
+        required: true
+        default: 'v1.0.3'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar artefacto liberado
+        uses: robinraju/release-downloader@v1
+        with:
+          repository: ${{ github.repository }}
+          tag: ${{ github.event.inputs.version }}
+          fileName: sistema-inventario-${{ github.event.inputs.version }}.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Preparar directorio de despliegue
+        run: |
+          mkdir -p despliegue-${{ github.event.inputs.version }}
+          unzip sistema-inventario-${{ github.event.inputs.version }}.zip -d despliegue-${{ github.event.inputs.version }}
+
+      - name: Verificar y ejecutar sistema
+        run: |
+          ls -R despliegue-${{ github.event.inputs.version }}
+          cd despliegue-${{ github.event.inputs.version }}
+          python3 -c "from src.producto import Producto; p = Producto('P01', 'Monitor', 4500.0, 10); print(p.mostrar_informacion())"
