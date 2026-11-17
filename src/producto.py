@@ -5,6 +5,7 @@ class Producto:
         self.precio = precio
         self.existencia = existencia
 
-    # Agrega self dentro de los paréntesis
+# Agrega self dentro de los paréntesis
+
 def mostrar_informacion(self) -> str:
-        return "ERROR INTENCIONAL"
+    return f"Código: {self.codigo} | Nombre: {self.nombre} | Precio: ${self.precio} | Existencia: {self.existencia}"
